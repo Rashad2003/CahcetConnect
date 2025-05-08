@@ -34,4 +34,7 @@ app.use("/uploads/results", express.static(path.join(__dirname, "uploads/results
 app.use("/uploads/studyMaterials", express.static(path.join(__dirname, "uploads/studyMaterials")));
 
 const PORT = process.env.PORT || 5000;
+
+app.get("/",(req,res)=> res.send("API Working!"));
+
 app.listen(PORT, () => console.log(`🔥 Server running on port ${PORT}`));
