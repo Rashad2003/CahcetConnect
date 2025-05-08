@@ -29,7 +29,7 @@ const Student_Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/student/register", { 
+      await axios.post(backendUrl + "/api/student/register", { 
         name, 
         email, 
         password,  
