@@ -64,7 +64,7 @@ const Timetables = () => {
       setFile(null);
       fetchTimetables();
     } catch (error) {
-      console.error("Error uploading timetable:", error);
+      console.error("Error uploading timetable:", error.message);
     } finally {
       setLoading(false);
     }
