@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaUser, FaLock, Fa500Px } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const Faculty_Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [department, setDepartment] = useState("");
+  const {backendUrl} = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const Faculty_Signup = () => {
 
     try {
       // 🔥 Send data to MongoDB Backend
-      await axios.post("http://localhost:5000/api/faculty/register", {
+      await axios.post(backendUrl + "/api/faculty/register", {
         name,
         email,
         password, // Still storing in MongoDB for non-Firebase logins

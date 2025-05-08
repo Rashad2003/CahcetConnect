@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaBookOpen, FaUpload, FaFolder, FaFolderOpen } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const StudyMaterials = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem('token');
+  const {backendUrl} = useContext(AuthContext);
   const [materials, setMaterials] = useState([]);
   const [title, setTitle] = useState("");
   const [department, setDepartment] = useState("All");
@@ -20,7 +22,7 @@ const StudyMaterials = () => {
 
   const fetchMaterials = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/studyMaterials/get", {
+      const res = await axios.get(backendUrl + "/api/studyMaterials/get", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMaterials(res.data);
@@ -41,7 +43,7 @@ const StudyMaterials = () => {
     formData.append("year", year); // Add year field
 
     try {
-      await axios.post("http://localhost:5000/api/studyMaterials/add", formData, {
+      await axios.post(backendUrl + "/api/studyMaterials/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

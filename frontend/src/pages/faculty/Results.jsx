@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaPercentage, FaUserGraduate } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const Results = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem('token');
+  const {backendUrl} = useContext(AuthContext);
   const [results, setResults] = useState([]);
   const [students, setStudents] = useState([]);
   const [semester, setSemester] = useState("");
@@ -22,7 +24,7 @@ const Results = () => {
 
   const fetchResults = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/results/get", {
+      const res = await axios.get(backendUrl + "/api/results/get", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setResults(res.data);
@@ -33,7 +35,7 @@ const Results = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/students", {
+      const res = await axios.get(backendUrl + "/api/auth/students", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStudents(res.data);
@@ -51,7 +53,7 @@ const Results = () => {
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/results/add",
+        backendUrl + "/api/results/add",
         { studentId: selectedStudent, semester, percentage },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaBullhorn, FaCalendarAlt } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const Announcements = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem('token');
+  const {backendUrl} = useContext(AuthContext)
   const [announcements, setAnnouncements] = useState([]);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -18,7 +20,7 @@ const Announcements = () => {
 
   const fetchAnnouncements = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/announcements/get", {
+      const res = await axios.get( backendUrl + "/api/announcements/get", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnnouncements(res.data);
@@ -33,7 +35,7 @@ const Announcements = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/announcements/add",
+        backendUrl + "/api/announcements/add",
         { title, message, department },
         { headers: { Authorization: `Bearer ${token}` } }
       );

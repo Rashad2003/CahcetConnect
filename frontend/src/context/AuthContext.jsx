@@ -4,6 +4,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
+  const backendUrl = "https://cahcet-connect.vercel.app";
 
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     token,
     setToken,
+    backendUrl,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

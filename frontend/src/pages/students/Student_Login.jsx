@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaUser, FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
+import AuthContext from "../../context/AuthContext";
 
 const Student_Login = ({setToken}) => {
+  const {backendUrl} = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Student_Login = ({setToken}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/student/login', { email, password });
+      const res = await axios.post(backendUrl + '/api/student/login', { email, password });
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));

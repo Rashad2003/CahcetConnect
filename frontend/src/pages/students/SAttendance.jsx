@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaUser, FaPercentage } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const SAttendance = () => {
   const token = localStorage.getItem('token');
+  const {backendUrl} = useContext(AuthContext);
   const [students, setStudents] = useState([]);
   const [records, setRecords] = useState([]);
 
@@ -15,7 +17,7 @@ const SAttendance = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/students", {
+      const res = await axios.get(backendUrl + "/api/auth/students", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStudents(res.data);
@@ -26,7 +28,7 @@ const SAttendance = () => {
 
   const fetchAttendanceRecords = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/attendance/get", {
+      const res = await axios.get(backendUrl + "/api/attendance/get", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRecords(res.data);

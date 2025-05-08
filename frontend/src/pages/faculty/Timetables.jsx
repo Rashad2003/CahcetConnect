@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaUpload, FaFolder, FaFolderOpen } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const Timetables = () => {
   const token = localStorage.getItem('token');
+  const {backendUrl} = useContext(AuthContext);
   const [timetables, setTimetables] = useState([]);
   const [title, setTitle] = useState("");
   const [department, setDepartment] = useState("All");
@@ -23,7 +25,7 @@ const Timetables = () => {
 
   const fetchTimetables = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/timetables/get", {
+      const res = await axios.get(backendUrl + "/api/timetables/get", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTimetables(res.data);
@@ -47,7 +49,7 @@ const Timetables = () => {
     formData.append("examType", examType);
 
     try {
-      await axios.post("http://localhost:5000/api/timetables/add", formData, {
+      await axios.post(backendUrl + "/api/timetables/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
