@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaUser, FaLock, FaBook, FaChalkboardTeacher, FaAddressCard, FaIdCard, FaPhone, FaCalendar, FaUsers } from "react-icons/fa";
+import AuthContext from "../../context/AuthContext";
 
 const Student_Signup = () => {
+  const {backendUrl} = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
